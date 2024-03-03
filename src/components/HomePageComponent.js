@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {useNavigate } from 'react-router-dom'
 import { getUserData } from '../DataServices/DataServices';
+import UserContext from '../UserContext/UserContext';
 
 const HomePageComponent = () => {
     const [userInfo, setUserInfo] = useState({});
     const [newPerson, setNewPerson] = useState(true);
+
+    let data = useContext(UserContext)
 
     const navigate = useNavigate();// Reacts-router-dom's method for changinfg url locations
 
@@ -18,6 +21,7 @@ const HomePageComponent = () => {
                 const fetchedData = await getUserData();
                 console.log(fetchedData);
                 setUserInfo(fetchedData);
+                data.setUser(fetchedData)
             }
             getData();
         },[newPerson])// this useEffect takes 2 parameters: parameter one: anonymous function; and parameter 2 is the Dependency Array []
